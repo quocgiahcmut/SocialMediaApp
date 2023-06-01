@@ -15,8 +15,7 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
 			.HasMaxLength(100);
 
 		builder.Property(p => p.Content)
-			.IsRequired()
-			.HasMaxLength(500);
+			.IsRequired();
 
 		builder.Property(p => p.CreatedAt)
 			.IsRequired();
@@ -36,10 +35,14 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
 			.HasForeignKey(l => l.PostId)
 			.OnDelete(DeleteBehavior.Cascade);
 
-		builder.HasMany(p => p.PostTags)
-			.WithOne(pt => pt.Post)
-			.HasForeignKey(pt => pt.PostId)
+		builder.HasMany(p => p.MediaAttachments)
+			.WithOne(ma => ma.Post)
+			.HasForeignKey(ma => ma.PostId)
 			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.HasMany(p => p.Tags)
+			.WithMany(t => t.Posts)
+			.UsingEntity(j => j.ToTable("PostTag"));
 
 		builder.ToTable("Posts");
 	}

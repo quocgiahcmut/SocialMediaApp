@@ -11,19 +11,18 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
 		builder.HasKey(c => c.CommentId);
 
 		builder.Property(c => c.Content)
-			.IsRequired()
-			.HasMaxLength(500);
+			.IsRequired();
 
 		builder.Property(c => c.CreatedAt)
 			.IsRequired();
 
 		builder.HasOne(c => c.User)
-			.WithMany()
+			.WithMany(u => u.Comments)
 			.HasForeignKey(c => c.UserId)
-			.OnDelete(DeleteBehavior.Cascade);
+			.OnDelete(DeleteBehavior.Restrict);
 
 		builder.HasOne(c => c.Post)
-			.WithMany()
+			.WithMany(p => p.Comments)
 			.HasForeignKey(c => c.PostId)
 			.OnDelete(DeleteBehavior.Cascade);
 
