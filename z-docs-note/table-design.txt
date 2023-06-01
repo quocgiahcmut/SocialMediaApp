@@ -1,0 +1,79 @@
+User
+- user_id (primary key)
+- username
+- email
+- password
+- profile_picture
+- bio
+
+Post
+- post_id (primary key)
+- user_id (foreign key referencing User)
+- content
+- media_attachments
+- timestamp
+
+Comment
+- comment_id (primary key)
+- post_id (foreign key referencing Post)
+- user_id (foreign key referencing User)
+- content
+- timestamp
+
+Like
+- like_id (primary key)
+- post_id (foreign key referencing Post)
+- user_id (foreign key referencing User)
+
+Follower
+- follower_id (primary key)
+- follower_user_id (foreign key referencing User)
+- followed_user_id (foreign key referencing User)
+
+Hashtag
+- hashtag_id (primary key)
+- name
+
+PostHashtag (junction table for many-to-many relationship between Post and Hashtag)
+- post_id (foreign key referencing Post)
+- hashtag_id (foreign key referencing Hashtag)
+
+Notification
+- notification_id (primary key)
+- user_id (foreign key referencing User)
+- type
+- content
+- timestamp
+
+Media
+- media_id (primary key)
+- post_id (foreign key referencing Post)
+- file_name
+- file_path
+- media_type
+- timestamp
+
+Message
+- message_id (primary key)
+- sender_id (foreign key referencing User)
+- recipient_id (foreign key referencing User)
+- content
+- timestamp
+
+Conversation
+- conversation_id (primary key)
+- name
+- created_by (foreign key referencing User)
+- created_at
+
+Participant (junction table for many-to-many relationship between Conversation and User)
+- conversation_id (foreign key referencing Conversation)
+- user_id (foreign key referencing User)
+
+Tag
+- tag_id (primary key)
+- name
+
+PostTag (junction table for many-to-many relationship between Post and Tag)
+- post_id (foreign key referencing Post)
+- tag_id (foreign key referencing Tag)
